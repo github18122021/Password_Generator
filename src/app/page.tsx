@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
+import { generate } from "generate-password";
 
 function Page() {
   const [password, setPassword] = useState("");
@@ -12,10 +13,11 @@ function Page() {
   });
 
   const generatePassword = () => { 
-    setPassword("Generated Password");
+    // setPassword("Generated Password");
+    setPassword(generate({...options}));
   };
 
-  const handleCheckboxChange = (event) => {
+  const handleCheckboxChange = (event : ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
     setOptions({ ...options, [name]: checked });
   };
