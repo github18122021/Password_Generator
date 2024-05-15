@@ -11,6 +11,7 @@ function Page() {
     lowercase: true,
     uppercase: true,
   });
+  const [isCopied, setIsCopied] = useState("Copy Password");
 
   const generatePassword = () => { 
     // setPassword("Generated Password");
@@ -21,6 +22,15 @@ function Page() {
     const { name, checked } = event.target;
     setOptions({ ...options, [name]: checked });
   };
+
+  const copyPassword = () => {
+    navigator.clipboard.writeText(password);
+    setIsCopied("Password Copied!");
+
+    setTimeout(() => {
+      setIsCopied("Copy Password");
+    }, 2000);
+  }
 
   return (
     <div className="h-screen bg-gray-200 flex justify-center items-center">
@@ -51,7 +61,11 @@ function Page() {
         {password && (
           <section className="mt-6">
             <label className="block mb-2">Generated Password:</label>
-            <input type="text" value={password} readOnly className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-700 bg-gray-100" />
+            {/* <input type="text" value={password} readOnly className=" p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-700 bg-gray-100" /> */}
+            <p className="max-w-[30rem] border border-gray-300 rounded-md focus:outline-none focus:border-blue-700 bg-gray-100 break-all">{password}</p>
+            <section className="text-center mt-4">
+            <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" onClick={copyPassword}>{isCopied}</button>
+            </section>
           </section>
         )}
       </div>
